@@ -6,6 +6,8 @@ session_start();
 $success = null;
 $error = [];
 
+//to do : ajouter champe civilité 
+
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
