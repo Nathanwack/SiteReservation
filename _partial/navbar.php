@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
   <div class="container-fluid">
     
-    <a class="navbar-brand" href="/SiteReservation/index">
+    <a class="navbar-brand" href="/SiteReservation/index.php">
       <img src="/SiteReservation/assets/Logo.png" alt="Logo" height="40">
     </a>
 
