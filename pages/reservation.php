@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../_partial/header.php';
 require_once __DIR__ . '/../connexion/db.php';
 
+session_start();
 $success = null;
 $error = [];
 
@@ -43,30 +44,55 @@ if (isset($_POST['submit'])) {
         } else {
             $dateFin = $dateFin . ' ' . $heureFin . ':' . $minFin . ':00';
         }
-        echo $dateDebut;
 
 
 
 
         var_dump($_POST);
 
-        // if (!$error) {
-        //     $sql = "INSERT INTO salle (libelle, capacite, type) 
-        //     VALUES (:libelle, :capacite, :type)";
+        if (!$error) {
+            $sql = "SELECT s.*
+                FROM salle s
+                WHERE s.type = :type
+                AND s.capacite >= :capacite
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM reservation r
+                    WHERE r.salle_id = s.id
+                    AND r.dateHeure_debut < :dateHeureFin
+                    AND r.dateHeure_fin > :dateHeureDebut)";
 
-        //     $requete = $pdo->prepare($sql);
-        //     $resultat = $requete->execute(array(
-        //         'libelle'          => $libelle,
-        //         'capacite'         => $capacite,
-        //         'type'             => $type
-        //     ));
+            $requete = $pdo->prepare($sql);
 
-        //     if ($resultat) {
-        //         $success = "La salle es bien ajouté en BDD";
-        //     } else {
-        //         $error[] = "Erreur lors d'insertion en BDD";
-        //     }
-        // }
+            // Exécution avec les paramètres
+            $resultat = $requete->execute(array(
+                'type'            => $type,
+                'capacite'        => $capacite,
+                'dateHeureDebut'  => $dateDebut,
+                'dateHeureFin'    => $dateFin
+            ));
+
+            // Récupération des résultats
+            if ($resultat) {
+                $sallesDisponibles = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+                if (!empty($sallesDisponibles)) {
+                    // Stocker les résultats en session
+                    $_SESSION['dateDebut']=$dateDebut;
+                    $_SESSION['dateFin']=$dateFin;
+                    $_SESSION['sallesDisponibles'] = $sallesDisponibles;
+
+                    // Redirection vers la page résultat
+                    header('Location: resultatRecherche.php');
+                    exit;
+                } else {
+                    $error[] = "Aucune salle disponible pour cette période.";
+                }
+            }
+            else {
+                $error[] = "il y a une erreur lors de la recherche ; veuillez reessayer plus tard.";
+            }
+        }
     }
 }
 
@@ -147,7 +173,7 @@ if (isset($_POST['submit'])) {
 
 
     </div>
-    
+
 
 
     <?php
