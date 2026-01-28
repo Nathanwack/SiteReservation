@@ -3,7 +3,7 @@
 
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'coworker');
+define('DB_NAME', 'ccoworker');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
