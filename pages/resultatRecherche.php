@@ -10,6 +10,8 @@ if (!isset($_SESSION['sallesDisponibles'])) {
 }
 
 $sallesDisponibles = $_SESSION['sallesDisponibles'];
+$dateDebut=$_SESSION['dateDebut'];
+$dateFin=$_SESSION['dateFin'];
 
 
 ?>
@@ -18,7 +20,8 @@ $sallesDisponibles = $_SESSION['sallesDisponibles'];
 
 
         <div class="bg-secondary p-5 mb-5 rounded">
-            <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode de :  </br>  </p>
+            <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode de :  </br></br>
+            <?= $dateDebut ?> à  <?= $dateFin ?> </p>
         </div>
 
         <table class="table table-dark table-striped-columns ">
@@ -35,7 +38,7 @@ $sallesDisponibles = $_SESSION['sallesDisponibles'];
                 <tr>
                     <th scope="row"><?= htmlspecialchars($salle['libelle']) ?></th>
                     <td><?= htmlspecialchars($salle['capacite']) ?></td>
-                    <td ><input type="radio" name="resultat" id="<?= htmlspecialchars($salle['id']) ?>"></td>
+                    <td ><input type="radio" name="resultat" value="<?= htmlspecialchars($salle['id']) ?>" id="<?= htmlspecialchars($salle['id']) ?>"></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
