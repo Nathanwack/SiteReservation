@@ -1,5 +1,11 @@
 <?php 
 require_once('../_partial/header.php');
+
+
+
+
+
+
 ?>
 
 <div class="container p-5">
@@ -8,11 +14,11 @@ require_once('../_partial/header.php');
         <form action="" method="post">
             <div class="my-3 ">
                 <label for="nom" class="form-label">Nom :</label placeholder="dd">
-                <input class="form-control" type="text" name="nom" placeholder="Nom" require>
+                <input class="form-control" type="text" name="nom" placeholder="Nom" required>
             </div>
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>
-                <select class="form-select" aria-label="Default select example" name="type" require>
+                <select class="form-select" aria-label="Default select example" name="type" required>
                     <option selected>Choisir un type de salle</option>
                     <option value="open-space">Open-space</option>
                     <option value="bureau">Bureau</option>
@@ -21,7 +27,7 @@ require_once('../_partial/header.php');
             </div>
             <div class="my-3 ">
                 <label for="capacite" class="form-label">Capacité :</label>
-                <select class="form-select" aria-label="Default select example" name="capacite" require>
+                <select class="form-select" aria-label="Default select example" name="capacite" required>
                     <option selected>Choisir une capacité</option>
                     <option value="5">0 à 5 personnes</option>
                     <option value="10">5 à 10 personnes</option>
@@ -31,11 +37,11 @@ require_once('../_partial/header.php');
             </div>
             <div class="my-3 ">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="datetime-local" name="dateDebut" require>
+                <input type="datetime-local" name="dateDebut" required  min="2026-02-01T08:00" max="2026-04-30T18:00">
             </div>
             <div class="my-3 ">
                 <label for="dateFin" class="form-label">Date et heure de fin :</label>
-                <input type="datetime-local" name="dateFin" require>
+                <input type="datetime-local" name="dateFin" required>
             </div>
             <input class="btn btn-primary" type="submit" value="Rechercher une disponiblité" />
         </form>
