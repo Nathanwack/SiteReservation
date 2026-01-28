@@ -2,7 +2,7 @@
   <div class="container-fluid">
     
     <a class="navbar-brand" href="/SiteReservation/index">
-      <img src="assets/Logo.png" alt="Logo" height="40">
+      <img src="/SiteReservation/assets/Logo.png" alt="Logo" height="40">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
