@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
             <label>Type du salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
                 <option selected>Choisir le nom du salle</option>
-                <option value="1">Open-sapce</option>
+                <option value="1">Open-space</option>
                 <option value="2">Bureau</option>
                 <option value="3">Salle de reunion</option>
             </select>
