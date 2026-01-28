@@ -18,8 +18,8 @@ if (isset($_POST['submit'])) {
         $minDebut     =       htmlspecialchars(trim($_POST['minDebut']));
         $minFin       =       htmlspecialchars(trim($_POST['minFin']));
 
-        $dateDebut = date('d/m/Y', strtotime($dateDebut));
-        echo $dateDebut;
+
+
 
         if (!$nom) {
             $error[] = "Libelle ne peut etre vide ";
@@ -35,17 +35,20 @@ if (isset($_POST['submit'])) {
         if (!$dateDebut) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateDebut = $dateDebut . '-' . $heureDebut . 'h' . $minDebut;
+            $dateDebut = $dateDebut . ' ' . $heureDebut . ':' . $minDebut . ':00';
         }
+
         if (!$dateFin) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateFin = $dateFin . '-' . $heureFin . 'h' . $minFin;
+            $dateFin = $dateFin . ' ' . $heureFin . ':' . $minFin . ':00';
         }
+        echo $dateDebut;
+
+
+
 
         var_dump($_POST);
-        echo $dateDebut;
-        echo $dateFin;
 
         // if (!$error) {
         //     $sql = "INSERT INTO salle (libelle, capacite, type) 
@@ -115,7 +118,7 @@ if (isset($_POST['submit'])) {
                     <option value="16">16</option>
                 </select>
                 <select name="minDebut">
-                    <option value="0">00</option>
+                    <option value="00">00</option>
                     <option value="30">30</option>
                 </select>
             </div>
@@ -134,7 +137,7 @@ if (isset($_POST['submit'])) {
                     <option value="16">16</option>
                 </select>
                 <select name="minFin">
-                    <option value="0">00</option>
+                    <option value="00">00</option>
                     <option value="30">30</option>
                 </select>
             </div>
@@ -142,6 +145,41 @@ if (isset($_POST['submit'])) {
             <input class="btn btn-primary" type="submit" name="submit" value="Rechercher une disponiblité" />
         </form>
 
-        <?php
-        require_once('../_partial/footer.php');
-        ?>
+
+    </div>
+    <div class="resultat-recherche">
+        <table class="table table-dark table-striped-columns">
+
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Salle</th>
+                    <th scope="col">Date</th>
+                    <th scope="col" >Choisir</th>
+                </tr>
+            </thead>
+            <tbody class="text-center" >
+                <tr >
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td ><input type="radio" name="resultat" id=""></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td ><input type="radio" name="resultat" id=""></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>John</td>
+                    <td ><input type="radio" name="resultat" id=""></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <?php
+    require_once('../_partial/footer.php');
+    ?>
