@@ -22,12 +22,12 @@ if (isset($_POST['submit'])) {
         if (!$capacite) {
             $error[] = "Capacité ne peut etre vide ";
         }
-        
+
         if (!$type) {
             $error[] = "Veuillez choisir un type pour la salle  ";
         }
 
-        if ($type=="Choisir le nom du salle") {
+        if ($type == "Choisir le nom du salle") {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         }
         var_dump($_POST);
@@ -80,11 +80,11 @@ if (isset($_POST['submit'])) {
                 <input type="number" name="capacite" min="1" max="100" class="form-control" id="capacite" placeholder="La capacité du salle" required>
             </div>
 
-            <div class="d-grid gap-2 mt-5">
-                <button class="btn btn-primary py-3" type="submit" name="submit">
-                    <p class="fs-5">Valider</p>
+            
+                <button class="btn btn-primary btn-lg px-5" type="submit" name="submit">
+                    <p class="text-center">Valider</p>
                 </button>
-            </div>
+            
 
         </form>
 
@@ -94,28 +94,38 @@ if (isset($_POST['submit'])) {
 
         foreach ($error as $err) { ?>
 
-        <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded "><?= $err; }?>  </p>
-            
-    <?php     
-    } else if($success) {
-    ?>
-        <p class="text-center bg-info-subtle p-3 mx-5 fs-4 rounded "><?= $success; ?>  </p>
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded "><?= $err;
+                                                                        } ?> </p>
 
-        <div class="salle_modif bg-dark p-5 col-12 mt-5 text-light text-center rounded">
+        <?php
+    } else if ($success) {
+        ?>
+            <p class="text-center bg-info-subtle p-3 mx-5 fs-4 rounded "><?= $success; ?> </p>
 
-            <p class="text-center fs-4">Information de la salle </p>
-            <p class="text-center fs-4"></p> <br>
-            <p class="text-center">Libellé de salle : </p>
-            <p class="text-center fs-4"></p><br>
-            <p class="text-center">Capcité de salle : </p>
-            <p class="text-center fs-4"></p><br>
-            <p class="text-center">Type de salle : </p>
-            <p class="text-center fs-4"></p><br>
+            <div class="salle_modif bg-dark px-5 py-2 col-6 mt-5 text-light text-center rounded mx-auto">
+
+                <p class="text-center fs-4">Information de la salle </p>
+
+                <hr class="bg-light">
+
+                <p class="text-center fs-5">Libellé de salle :
+                <?php if ($libelle) {
+                                                echo $libelle;
+                                            }  ?></p>
+                <p class="text-center fs-5">Capcité de salle :
+                <?php if ($capacite) {
+                                            echo $capacite;
+                                        }  ?></p>
+
+                <p class="text-center fs-5">Type de salle :
+                    <?php if ($type) {
+                        echo $type;
+                    }  ?></p>
 
 
 
-        </div>
+            </div>
 
-    <?php } ?>
+        <?php } ?>
 
 </div>
