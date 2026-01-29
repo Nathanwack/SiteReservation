@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+<nav class="navbar navbar-expand-lg bg-info-subtle .bg-gradient  px-3">
   <div class="container-fluid">
     
     <a class="navbar-brand" href="/SiteReservation/index.php">
