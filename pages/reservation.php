@@ -18,8 +18,7 @@ if (isset($_POST['submit'])) {
         $dateFin      =       htmlspecialchars(trim($_POST['dateFin']));
         $heureDebut   =       htmlspecialchars(trim($_POST['heureDebut']));
         $heureFin     =       htmlspecialchars(trim($_POST['heureFin']));
-        $minDebut     =       htmlspecialchars(trim($_POST['minDebut']));
-        $minFin       =       htmlspecialchars(trim($_POST['minFin']));
+       
 
 
 
@@ -38,13 +37,13 @@ if (isset($_POST['submit'])) {
         if (!$dateDebut) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateDebut = $dateDebut . ' ' . $heureDebut . ':' . $minDebut . ':00';
+            $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         }
 
         if (!$dateFin) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateFin = $dateFin . ' ' . $heureFin . ':' . $minFin . ':00';
+            $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
         }
 
 
@@ -83,6 +82,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['dateDebut']=$dateDebut;
                     $_SESSION['dateFin']=$dateFin;
                     $_SESSION['sallesDisponibles'] = $sallesDisponibles;
+                    $_SESSION['nom'] = $nom;
 
                     // Redirection vers la page résultat
                     header('Location: resultatRecherche.php');
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
                     <option selected>Choisir un type de salle</option>
                     <option value="open-space">Open-space</option>
                     <option value="bureau">Bureau</option>
-                    <option value="salle-de-réunion">Salle de réunion</option>
+                    <option value="salle de réunion">Salle de réunion</option>
                 </select>
             </div>
             <div class="my-3 ">
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="my-3">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="date" name="dateDebut" id="date" min="2026-02-01" max="2026-04-29">
+                <input type="date" name="dateDebut" id="date" min="2026-02-01" max="2026-04-29" required>
                 <select name="heureDebut">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -145,15 +145,12 @@ if (isset($_POST['submit'])) {
                     <option value="15">15</option>
                     <option value="16">16</option>
                 </select>
-                <select name="minDebut">
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                </select>
+                
             </div>
 
             <div class="my-3">
                 <label for="dateFin" class="form-label">Date et heure de fin :</label>
-                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30">
+                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required>
                 <select name="heureFin">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -164,16 +161,20 @@ if (isset($_POST['submit'])) {
                     <option value="15">15</option>
                     <option value="16">16</option>
                 </select>
-                <select name="minFin">
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                </select>
+                
             </div>
 
             <input class="btn btn-primary" type="submit" name="submit" value="Rechercher une disponiblité" />
-        </form>
+        </form>    
+    </div>
+    
 
+      <?php  if ($error) {
+        foreach ($error as $err) { ?>
 
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded ">
+                <?= $err;  } }?> </p>
+           
     </div>
 
 
