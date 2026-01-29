@@ -36,11 +36,12 @@ if (isset($_POST['submit'])) {
         $stmt = $pdo->query($sqlSalles);
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if($row['libelle']==$libelle){
+            if(strtolower($row['libelle']) === strtolower($libelle))
+            {
                 $error[]="Erreur : ce libellé existe déjà.";
             };
         }
-
+        
 
 
         if (!$error) {
@@ -69,7 +70,7 @@ if (isset($_POST['submit'])) {
 
 
 <div class="container p-5">
-    <p class="text-start fs-2">Enregistrer une salle </p>
+    <h1 class="text-start fs-2">Enregistrer une salle </h1>
     <div class="form-salle col-12 center p-5">
         <form action="" method="POST">
 
