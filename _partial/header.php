@@ -13,9 +13,6 @@
       <?php
       require_once('navbar.php');
       ?>
-      <style type="text/css">
-      body { background-image: url(/SiteReservation/assets/background.png) } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
-      </style>
     </header>
     <main>
     

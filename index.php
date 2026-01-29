@@ -42,8 +42,8 @@ $i = 1;
 
 
     <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
-        <button class="btn btn-success">La semaine précédente</button>
-        <button class="btn btn-success">La semaine suivante</button>
+        <button class="btn btn-primary"><img src="/SiteReservation/assets/fleche-gauche.png" alt="Logo" height="20">Semaine précédente</button>
+        <button class="btn btn-primary">Semaine suivante<img src="/SiteReservation/assets/fleche-droite.png" alt="Logo" height="20"></button>
     </div>
 
 

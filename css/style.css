@@ -39,6 +39,8 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #fff;
+  background-image: url(/SiteReservation/assets/background.png);
+  background-attachment: fixed;
 }
 
 /* Typography */
@@ -111,6 +113,9 @@ input:focus, textarea:focus, select:focus {
   border-color: #CFF4FC;
 }
 
+footer {
+  height: 15dvh;
+}
 /* Images */
 
 

@@ -164,8 +164,8 @@ if (isset($_POST['submit'])) {
                     <td><?= $salle['libelle'] ?></td>
                     <td><?= $salle['type'] ?></td>
                     <td><?= $salle['capacite'] ?></td>
-                    <td><button class="bg-primary rounded p-1 text-light">Modifier</button></td>
-                    <td><button class="bg-success rounded p-1 text-light">Supprimer</button></td>
+                    <td><button class="btn btn-primary rounded p-1">Modifier</button></td>
+                    <td><button class="btn bg-danger rounded p-1 text-light">Supprimer</button></td>
                 </tr>
             <?php $i++;
             } ?>
