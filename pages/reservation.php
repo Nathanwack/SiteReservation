@@ -9,50 +9,63 @@ $error = [];
 //to do : ajouter champe civilité 
 
 if (isset($_POST['submit'])) {
-    if (!empty($_POST['nom']) && !empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
+    if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
         $nom          =       htmlspecialchars(trim($_POST['nom']));
+        $civilite          =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
         $dateDebut    =       htmlspecialchars(trim($_POST['dateDebut']));
         $dateFin      =       htmlspecialchars(trim($_POST['dateFin']));
         $heureDebut   =       htmlspecialchars(trim($_POST['heureDebut']));
         $heureFin     =       htmlspecialchars(trim($_POST['heureFin']));
-        $minDebut     =       htmlspecialchars(trim($_POST['minDebut']));
-        $minFin       =       htmlspecialchars(trim($_POST['minFin']));
+       
 
-
-
+        if (!$civilite) {
+            $error[] = "Veuillez choisir le civilité ";
+        }
 
         if (!$nom) {
             $error[] = "Libelle ne peut etre vide ";
         }
-        if (!$capacite) {
-            $error[] = "Capacité ne peut etre vide ";
+        elseif(!preg_match("/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/", $nom)){
+            $error[] = "Nom ne peut contenir que des lettres";
         }
-
+        
+        if (!$capacite) {
+            $error[] = "Veuillez choisir la capacité souhaité";
+        }
         if (!$type) {
             $error[] = "Veuillez choisir un type pour la salle  ";
         }
 
+        if($dateDebut>$dateFin){
+            $error[]="La date de fin ne peut etre inferieur de la date de début";
+        }
+        
+        if($dateDebut==$dateFin && $heureDebut >= $heureFin  ){
+            $error[]="L'heure de fin ne peut etre inferieur / égale de l'heure de début";
+        }
         if (!$dateDebut) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateDebut = $dateDebut . ' ' . $heureDebut . ':' . $minDebut . ':00';
+            $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         }
 
         if (!$dateFin) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
-            $dateFin = $dateFin . ' ' . $heureFin . ':' . $minFin . ':00';
+            $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
         }
 
+        
 
-
-
-        var_dump($_POST);
+        // var_dump($_POST);
 
         if (!$error) {
+
+        $nom=$civilite.'. '.$nom;
+
             $sql = "SELECT s.*
                 FROM salle s
                 WHERE s.type = :type
@@ -61,8 +74,8 @@ if (isset($_POST['submit'])) {
                     SELECT 1
                     FROM reservation r
                     WHERE r.salle_id = s.id
-                    AND r.dateHeure_debut < :dateHeureFin
-                    AND r.dateHeure_fin > :dateHeureDebut)";
+                    AND r.dateHeure_debut <= :dateHeureFin
+                    AND r.dateHeure_fin >= :dateHeureDebut)";
 
             $requete = $pdo->prepare($sql);
 
@@ -83,6 +96,8 @@ if (isset($_POST['submit'])) {
                     $_SESSION['dateDebut']=$dateDebut;
                     $_SESSION['dateFin']=$dateFin;
                     $_SESSION['sallesDisponibles'] = $sallesDisponibles;
+                    $_SESSION['nom'] = $nom;
+                    $_SESSION['type_salle']=$type;
 
                     // Redirection vers la page résultat
                     header('Location: resultatRecherche.php');
@@ -98,11 +113,6 @@ if (isset($_POST['submit'])) {
     }
 }
 
-
-
-
-
-
 ?>
 
 <div class="container p-5">
@@ -110,8 +120,10 @@ if (isset($_POST['submit'])) {
     <div class="form-salle col-12 center p-5">
         <form action="" method="post">
             <div class="my-3 ">
-                <label for="nom" class="form-label">Nom :</label placeholder="dd">
-                <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
+                <input type="radio" name="civilite" value="M" id="" selected> M.
+                <input type="radio" name="civilite" value="Mme" id=""> Mme. 
+                <input class="form-control mt-1" type="text" name="nom" placeholder="Nom" required>
             </div>
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>
@@ -119,7 +131,7 @@ if (isset($_POST['submit'])) {
                     <option selected>Choisir un type de salle</option>
                     <option value="open-space">Open-space</option>
                     <option value="bureau">Bureau</option>
-                    <option value="salle-de-réunion">Salle de réunion</option>
+                    <option value="salle de réunion">Salle de réunion</option>
                 </select>
             </div>
             <div class="my-3 ">
@@ -134,7 +146,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="my-3">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="date" name="dateDebut" id="date" min="2026-02-01" max="2026-04-29">
+                <input type="date" name="dateDebut" id="date" min="2026-02-01" max="2026-04-29" required>
                 <select name="heureDebut">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -145,15 +157,12 @@ if (isset($_POST['submit'])) {
                     <option value="15">15</option>
                     <option value="16">16</option>
                 </select>
-                <select name="minDebut">
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                </select>
+                
             </div>
 
             <div class="my-3">
                 <label for="dateFin" class="form-label">Date et heure de fin :</label>
-                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30">
+                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required>
                 <select name="heureFin">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -164,16 +173,20 @@ if (isset($_POST['submit'])) {
                     <option value="15">15</option>
                     <option value="16">16</option>
                 </select>
-                <select name="minFin">
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                </select>
+                
             </div>
 
             <input class="btn btn-primary" type="submit" name="submit" value="Rechercher une disponiblité" />
-        </form>
+        </form>    
+    </div>
+    
 
+      <?php  if ($error) {
+        foreach ($error as $err) { ?>
 
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded ">
+                <?= $err;  } }?> </p>
+           
     </div>
 
 
