@@ -11,11 +11,11 @@ $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $i=1;
 
 //to do : modifier l'affichage de l'heure et date
-
+// to do : planning par semaine 
 ?>
 
 <div class="container mt-5">
-    <p class="fs-1 text-center text-light my-5 bg-info rounded">Planning des reservations </p>
+    <p class="fs-1 text-center text-light my-5 bg-info rounded">Planning de toutes les reservations </p>
     <table class="table table-striped rounded">
         <thead  class="bg-info text-light">
             <tr>
