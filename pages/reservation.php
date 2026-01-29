@@ -9,9 +9,10 @@ $error = [];
 //to do : ajouter champe civilité 
 
 if (isset($_POST['submit'])) {
-    if (!empty($_POST['nom']) && !empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
+    if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
         $nom          =       htmlspecialchars(trim($_POST['nom']));
+        $civilite          =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
         $dateDebut    =       htmlspecialchars(trim($_POST['dateDebut']));
@@ -20,8 +21,9 @@ if (isset($_POST['submit'])) {
         $heureFin     =       htmlspecialchars(trim($_POST['heureFin']));
        
 
-
-
+        if (!$civilite) {
+            $error[] = "Veuillez choisir le civilité ";
+        }
 
         if (!$nom) {
             $error[] = "Libelle ne peut etre vide ";
@@ -29,10 +31,10 @@ if (isset($_POST['submit'])) {
         elseif(!preg_match("/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/", $nom)){
             $error[] = "Nom ne peut contenir que des lettres";
         }
+        
         if (!$capacite) {
             $error[] = "Veuillez choisir la capacité souhaité";
         }
-
         if (!$type) {
             $error[] = "Veuillez choisir un type pour la salle  ";
         }
@@ -61,6 +63,9 @@ if (isset($_POST['submit'])) {
         // var_dump($_POST);
 
         if (!$error) {
+
+        $nom=$civilite.'. '.$nom;
+
             $sql = "SELECT s.*
                 FROM salle s
                 WHERE s.type = :type
@@ -114,8 +119,10 @@ if (isset($_POST['submit'])) {
     <div class="form-salle col-12 center p-5">
         <form action="" method="post">
             <div class="my-3 ">
-                <label for="nom" class="form-label">Nom :</label placeholder="dd">
-                <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
+                <input type="radio" name="civilite" value="M" id="" selected> M.
+                <input type="radio" name="civilite" value="Mme" id=""> Mme. 
+                <input class="form-control mt-1" type="text" name="nom" placeholder="Nom" required>
             </div>
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>

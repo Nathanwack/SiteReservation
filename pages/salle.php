@@ -30,7 +30,19 @@ if (isset($_POST['submit'])) {
         if ($type == "Choisir le nom du salle") {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         }
-        var_dump($_POST);
+        // var_dump($_POST);
+
+        $sqlSalles = "SELECT libelle FROM salle";
+        $stmt = $pdo->query($sqlSalles);
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if($row['libelle']==$libelle){
+                $error[]="Erreur : ce libellé existe déjà.";
+            };
+        }
+
+
+
         if (!$error) {
             $sql = "INSERT INTO salle (libelle, capacite, type) 
             VALUES (:libelle, :capacite, :type)";
@@ -80,11 +92,11 @@ if (isset($_POST['submit'])) {
                 <input type="number" name="capacite" min="1" max="100" class="form-control" id="capacite" placeholder="La capacité du salle" required>
             </div>
 
-            
-                <button class="btn btn-primary btn-lg px-5" type="submit" name="submit">
-                    <p class="text-center">Valider</p>
-                </button>
-            
+
+            <button class="btn btn-primary btn-lg px-5" type="submit" name="submit">
+                <p class="text-center">Valider</p>
+            </button>
+
 
         </form>
 
@@ -109,13 +121,13 @@ if (isset($_POST['submit'])) {
                 <hr class="bg-light">
 
                 <p class="text-center fs-5">Libellé de salle :
-                <?php if ($libelle) {
-                                                echo $libelle;
-                                            }  ?></p>
+                    <?php if ($libelle) {
+                        echo $libelle;
+                    }  ?></p>
                 <p class="text-center fs-5">Capacité de salle :
-                <?php if ($capacite) {
-                                            echo $capacite;
-                                        }  ?></p>
+                    <?php if ($capacite) {
+                        echo $capacite;
+                    }  ?></p>
 
                 <p class="text-center fs-5">Type de salle :
                     <?php if ($type) {
