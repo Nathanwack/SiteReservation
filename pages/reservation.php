@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
         $nom          =       htmlspecialchars(trim($_POST['nom']));
-        $civilite     =       htmlspecialchars(trim($_POST['civilite']));
+        $civilite          =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
         $dateDebut    =       htmlspecialchars(trim($_POST['dateDebut']));
@@ -116,13 +116,15 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="container p-5">
-    <h1 class="text-start fs-2">Formulaire de réservation de salles</h1>
+    <h1 class="fs-1 text-center text-light my-5">Formulaire de réservation de salles</h1>
     <div class="form-salle col-12 center p-5">
         <form action="" method="post">
             <div class="my-3 ">
                 <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
-                <input type="radio" name="civilite" value="M" id="" selected> M.
-                <input type="radio" name="civilite" value="Mme" id=""> Mme. 
+                <input type="radio" name="civilite" value="M" id="" selected>
+                <label>M.</label>
+                <input type="radio" name="civilite" value="Mme" id="">
+                <label>Mme.</label> 
                 <input class="form-control mt-1" type="text" name="nom" placeholder="Nom" required>
             </div>
             <div class="my-3 ">

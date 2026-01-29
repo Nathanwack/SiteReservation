@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 
 
 <div class="container p-5">
-    <h1 class="text-start fs-2">Enregistrer une salle </h1>
+    <h1 class="fs-1 text-center text-light my-5">Enregistrer une salle </h1>
     <div class="form-salle col-12 center p-5">
         <form action="" method="POST">
 
@@ -92,13 +92,7 @@ if (isset($_POST['submit'])) {
                 <label for="capacite" class="form-label">Capacité</label>
                 <input type="number" name="capacite" min="1" max="100" class="form-control" id="capacite" placeholder="La capacité du salle" required>
             </div>
-
-
-            <button class="btn btn-primary btn-lg px-5" type="submit" name="submit">
-                <p class="text-center">Valider</p>
-            </button>
-
-
+            <input class="btn btn-primary btn-lg px-5" type="submit" name="submit" value="Valider"/>
         </form>
 
     </div>

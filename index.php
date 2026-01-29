@@ -14,8 +14,8 @@ $i=1;
 // to do : planning par semaine 
 ?>
 
-<div class="container mt-5">
-    <p class="fs-1 text-center text-light my-5 bg-info rounded">Planning de toutes les reservations </p>
+<div class="container p-5">
+    <h1 class="fs-1 text-center text-light my-5">Planning de toutes les reservations </h1>
     <table class="table table-striped rounded">
         <thead  class="bg-info text-light">
             <tr>
