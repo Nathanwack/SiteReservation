@@ -43,8 +43,8 @@ if (isset($_POST['submit'])) {
             $error[]="La date de fin ne peut etre inferieur de la date de début";
         }
         
-        if($dateDebut==$dateFin && $heureDebut > $heureFin){
-            $error[]="L'heure de fin ne peut etre inferieur de l'heure de début";
+        if($dateDebut==$dateFin && $heureDebut >= $heureFin  ){
+            $error[]="L'heure de fin ne peut etre inferieur / égale de l'heure de début";
         }
         if (!$dateDebut) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
@@ -74,8 +74,8 @@ if (isset($_POST['submit'])) {
                     SELECT 1
                     FROM reservation r
                     WHERE r.salle_id = s.id
-                    AND r.dateHeure_debut < :dateHeureFin
-                    AND r.dateHeure_fin > :dateHeureDebut)";
+                    AND r.dateHeure_debut <= :dateHeureFin
+                    AND r.dateHeure_fin >= :dateHeureDebut)";
 
             $requete = $pdo->prepare($sql);
 
@@ -97,6 +97,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['dateFin']=$dateFin;
                     $_SESSION['sallesDisponibles'] = $sallesDisponibles;
                     $_SESSION['nom'] = $nom;
+                    $_SESSION['type_salle']=$type;
 
                     // Redirection vers la page résultat
                     header('Location: resultatRecherche.php');
