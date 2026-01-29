@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
         $nom          =       htmlspecialchars(trim($_POST['nom']));
-        $civilite          =       htmlspecialchars(trim($_POST['civilite']));
+        $civilite     =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
         $dateDebut    =       htmlspecialchars(trim($_POST['dateDebut']));
