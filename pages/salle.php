@@ -142,3 +142,6 @@ if (isset($_POST['submit'])) {
         <?php } ?>
 
 </div>
+<?php
+require_once __DIR__ . '/../_partial/footer.php';
+?>
