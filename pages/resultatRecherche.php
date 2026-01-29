@@ -17,6 +17,7 @@ $sallesDisponibles = $_SESSION['sallesDisponibles'];
 $dateDebut = $_SESSION['dateDebut'];
 $dateFin = $_SESSION['dateFin'];
 $nom = $_SESSION['nom'];
+$type=$_SESSION['type_salle'];
 
 //traitement de conversion date et heure en date locale 
 $dateDebutDT = new DateTime($dateDebut);
@@ -66,8 +67,14 @@ if (isset($_POST['submit'])) {
 
 <?php if(!$success){ ?>
     <div class="bg-secondary p-5 mb-5 rounded">
-        <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode de : </br></br>
-            <?= $message ?> </p>
+        <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode  </br></br>
+            <?= $message ?><br>
+            et de'une salle du type  :
+
+        
+        </p>
+
+
     </div>
     <form action="" method="post">
         <table class="table table-dark table-striped-columns ">
