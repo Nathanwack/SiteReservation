@@ -8,7 +8,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
 $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$i=1;
+$i = 1;
 
 //to do : modifier l'affichage de l'heure et date
 // to do : planning par semaine 
@@ -16,28 +16,38 @@ $i=1;
 
 <div class="container mt-5">
     <p class="fs-1 text-center text-light my-5 bg-info rounded">Planning de toutes les reservations </p>
-    <table class="table table-striped rounded">
-        <thead  class="bg-info text-light">
+
+    <!-- debut de la table  -->
+    <table class="table table-striped rounded text-center">
+        <thead class="bg-info text-light">
             <tr>
-                <th  class="bg-dark text-light" scope="col">  </th>
-                <th  class="bg-dark text-light" scope="col">Libellé de Salle</th>
-                <th class="bg-dark text-light" scope="col">Date et heure de début</th>
-                <th class="bg-dark text-light" scope="col">Date et heure de fin</th>
-                <th class="bg-dark text-light" scope="col">Réservé par</th>
+                <th class="bg-dark text-light" scope="col"> </th>
+                <th class="bg-dark text-light" scope="col">Lundi</th>
+                <th class="bg-dark text-light" scope="col">Mardi</th>
+                <th class="bg-dark text-light" scope="col">Mercredi</th>
+                <th class="bg-dark text-light" scope="col">Jeudi</th>
+                <th class="bg-dark text-light" scope="col">Vendredi</th>
             </tr>
         </thead>
         <tbody>
-         <?php   foreach ($resultats as $ligne) {  ?>
-            <tr>
-                <th scope="row"><?= $i ?></th>
-                <td><?= $ligne['libelle'] ?></td>
-                <td><?= $ligne['dateHeure_debut'] ?></td>
-                <td><?= $ligne['dateHeure_fin'] ?></td>
-                <td><?= $ligne['nom'] ?></td>
-            </tr>
-           <?php $i++ ; } ?>
+            <?php for ($i = 9; $i < 17; $i++) { ?>
+                <tr>
+
+                    <th scope="row"><?= $i . 'h-' . ($i + 1) . 'h';
+                                } ?></th>
+                </tr>
+
         </tbody>
     </table>
+    <!-- buttons  -->
+
+
+    <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2">
+        <button class="btn btn-success">La semaine précédente</button>
+        <button class="btn btn-success">La semaine suivante</button>
+    </div>
+
+
 
 </div>
 
