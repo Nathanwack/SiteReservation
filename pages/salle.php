@@ -6,9 +6,15 @@ require_once __DIR__ . '/../connexion/db.php';
 $success = null;
 $error = [];
 
+//traitement de recuperation des salles 
+$i=1;
+            $sqlSalle = "SELECT * FROM salle";
+            $stmtSalle = $pdo->prepare($sqlSalle);
+            $stmtSalle->execute();
 
+            $sallesObj = $stmtSalle->fetchAll(PDO::FETCH_ASSOC);
 
-
+//traitement d'insertion d'une salle
 if (isset($_POST['submit'])) {
     if (!empty($_POST['libelle']) && !empty($_POST['capacite']) && !empty($_POST['type'])) {
 
@@ -36,12 +42,11 @@ if (isset($_POST['submit'])) {
         $stmt = $pdo->query($sqlSalles);
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if(strtolower($row['libelle']) === strtolower($libelle))
-            {
-                $error[]="Erreur : ce libellé existe déjà.";
+            if (strtolower($row['libelle']) === strtolower($libelle)) {
+                $error[] = "Erreur : ce libellé existe déjà.";
             };
         }
-        
+
 
 
         if (!$error) {
@@ -71,6 +76,7 @@ if (isset($_POST['submit'])) {
 
 <div class="container p-5">
     <h1 class="text-start fs-2">Enregistrer une salle </h1>
+    <!-- debut de formulaire -->
     <div class="form-salle col-12 center p-5">
         <form action="" method="POST">
 
@@ -140,8 +146,40 @@ if (isset($_POST['submit'])) {
             </div>
 
         <?php } ?>
+        <!-- fin de formulaire -->
+        <!-- affichage des salles -->
+</div>
+
+<div class="container mt-5">
+    <table class="table table-striped rounded text-center">
+        <thead class="bg-info text-light">
+            <tr>
+                <th class="bg-dark text-light" scope="col"> </th>
+                <th class="bg-dark text-light" scope="col">Libellé de Salle</th>
+                <th class="bg-dark text-light" scope="col">Type</th>
+                <th class="bg-dark text-light" scope="col">Capacité</th>
+                <th class="bg-dark text-light" scope="col">Action</th>
+                <th class="bg-dark text-light" scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($sallesObj as $salle) {  ?>
+                <tr>
+                    <th scope="row"><?= $i ?></th>
+                    <td><?= $salle['libelle'] ?></td>
+                    <td><?= $salle['type'] ?></td>
+                    <td><?= $salle['capacite'] ?></td>
+                    <td><button class="bg-primary rounded p-1 text-light">Modifier</button></td>
+                    <td><button class="bg-success rounded p-1 text-light">Supprimer</button></td>
+                </tr>
+            <?php $i++;
+            } ?>
+        </tbody>
+    </table>
 
 </div>
+
 <?php
 require_once __DIR__ . '/../_partial/footer.php';
 ?>
