@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `id` int NOT NULL AUTO_INCREMENT,
   `dateHeure_debut` datetime NOT NULL,
-  `dateheure_fin` datetime NOT NULL,
+  `dateHeure_fin` datetime NOT NULL,
   `nom` varchar(255) NOT NULL,
   `salle_id` int NOT NULL,
   PRIMARY KEY (`id`),
