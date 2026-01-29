@@ -26,14 +26,24 @@ if (isset($_POST['submit'])) {
         if (!$nom) {
             $error[] = "Libelle ne peut etre vide ";
         }
+        elseif(!preg_match("/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/", $nom)){
+            $error[] = "Nom ne peut contenir que des lettres";
+        }
         if (!$capacite) {
-            $error[] = "Capacité ne peut etre vide ";
+            $error[] = "Veuillez choisir la capacité souhaité";
         }
 
         if (!$type) {
             $error[] = "Veuillez choisir un type pour la salle  ";
         }
 
+        if($dateDebut>$dateFin){
+            $error[]="La date de fin ne peut etre inferieur de la date de début";
+        }
+        
+        if($dateDebut==$dateFin && $heureDebut > $heureFin){
+            $error[]="L'heure de fin ne peut etre inferieur de l'heure de début";
+        }
         if (!$dateDebut) {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         } else {
@@ -46,10 +56,9 @@ if (isset($_POST['submit'])) {
             $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
         }
 
+        
 
-
-
-        var_dump($_POST);
+        // var_dump($_POST);
 
         if (!$error) {
             $sql = "SELECT s.*
@@ -97,11 +106,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-
-
-
-
 
 ?>
 
