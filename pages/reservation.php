@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="my-3">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="date" name="dateDebut" id="date" min="2026-02-01" max="2026-04-29" required>
+                <input type="date" name="dateDebut" id="date" min="2026-02-02" max="2026-04-29" required>
                 <select name="heureDebut">
                     <option value="9">9</option>
                     <option value="10">10</option>
