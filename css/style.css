@@ -185,7 +185,7 @@ footer {
 /* ITEMS */
 .box {
   background: #f8f9fa;
-  border: 1px solid #000000;
+  /* border: 1px solid #000000; */
   text-align: center;
   padding: 1rem;
   font-weight: 600;

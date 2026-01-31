@@ -115,7 +115,7 @@ function span($reser)
             echo 'grid-span-5 bg-darkblue text-light';
             break;
         case $reser['difJour'] == 5:
-            echo 'grid-span-6 bg-dark text-dark';
+            echo 'grid-span-6 bg-dark text-light';
             break;
         case $reser['difJour'] >= 6:   // 6 or more
             echo 'grid-span-7 bg-dark text-light';
@@ -154,6 +154,32 @@ function startGrid($reser)
     }
 }
 
+
+function bgColor($reser){
+    switch (true) {
+        case $reser['difJour'] == 0:
+            echo 'grid-span-1 bg-danger text-light';
+            break;
+        case $reser['difJour'] == 1:
+            echo 'grid-span-2 bg-info text-dark';
+            break;
+        case $reser['difJour'] == 2:
+            echo 'grid-span-3 bg-danger text-light';
+            break;
+        case $reser['difJour'] == 3:
+            echo 'grid-span-4 bg-success text-light';
+            break;
+        case $reser['difJour'] == 4:
+            echo 'grid-span-5 bg-darkblue text-light';
+            break;
+        case $reser['difJour'] == 5:
+            echo 'grid-span-6 bg-dark text-light';
+            break;
+        case $reser['difJour'] >= 6:   // 6 or more
+            echo 'grid-span-7 bg-dark text-light';
+            break;
+    }
+}
 ?>
 
 <div class="container p-5">
@@ -169,7 +195,7 @@ function startGrid($reser)
     </div>
 
     <!-- semaine  -->
-    <div class="grid-7 mb-5 text-start ">
+    <div class="grid-7 mb-2 text-start ">
         <div class="box">Lundi <p><?= date('d-m', strtotime($week ));?></p></div>
         <div class="box">Mardi <p><?= date('d-m', strtotime($week . ' +1 days')); ?></p></div>
         <div class="box">Mercredi <p><?= date('d-m', strtotime($week . ' +2 days')); ?></p></div>

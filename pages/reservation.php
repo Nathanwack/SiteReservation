@@ -7,13 +7,13 @@ $success = null;
 $error = [];
 $nom=null;
 $capacite=null;
-//to do : ajouter champe civilité 
+
+
 
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
         $nom          =       htmlspecialchars(trim($_POST['nom'] ?? ''));
-
         $civilite     =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
@@ -49,13 +49,13 @@ if (isset($_POST['submit'])) {
             $error[]="L'heure de fin ne peut etre inferieur / égale de l'heure de début";
         }
         if (!$dateDebut) {
-            $error[] = "Veuillez choisir un type valide pour la salle  ";
+            $error[] = "Veuillez choisir une date debut ";
         } else {
             $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         }
 
         if (!$dateFin) {
-            $error[] = "Veuillez choisir un type valide pour la salle  ";
+            $error[] = "Veuillez choisir une date fin  ";
         } else {
             $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
         }
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 
         if (!$error) {
 
-        $nom=$civilite.'. '.$nom;
+        $nomC=$civilite.'. '.$nom;
 
             $sql = "SELECT s.*
                 FROM salle s
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['dateDebut']=$dateDebut;
                     $_SESSION['dateFin']=$dateFin;
                     $_SESSION['sallesDisponibles'] = $sallesDisponibles;
-                    $_SESSION['nom'] = $nom;
+                    $_SESSION['nom'] = $nomC;
                     $_SESSION['type_salle']=$type;
 
                     // Redirection vers la page résultat
@@ -123,12 +123,13 @@ if (isset($_POST['submit'])) {
         <form action="" method="post">
             <div class="my-3 ">
                 <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
-                <input type="radio" name="civilite" value="M" id="" selected>
+                <input type="radio" name="civilite" value="M" id="" >
                 <label>M.</label>
-                <input type="radio" name="civilite" value="Mme" id="">
+                <input type="radio" name="civilite" value="Mme" id="" selected>
                 <label>Mme.</label> 
                 <input class="form-control mt-1" type="text" name="nom" placeholder="Nom"  value="<?= $nom ?>" required>
             </div>
+            
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
@@ -138,6 +139,7 @@ if (isset($_POST['submit'])) {
                     <option value="salle de réunion">Salle de réunion</option>
                 </select>
             </div>
+
             <div class="my-3 ">
                 <label for="capacite" class="form-label">Capacité :</label>
                 <select class="form-select" aria-label="Default select example" name="capacite" required>
@@ -160,8 +162,7 @@ if (isset($_POST['submit'])) {
                     <option value="14">14</option>
                     <option value="15">15</option>
                     <option value="16">16</option>
-                </select>
-                
+                </select> 
             </div>
 
             <div class="my-3">
@@ -188,7 +189,7 @@ if (isset($_POST['submit'])) {
       <?php  if ($error) {
         foreach ($error as $err) { ?>
 
-            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded ">
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-1">
                 <?= $err;  } }?> </p>
            
     </div>
