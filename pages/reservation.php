@@ -5,14 +5,16 @@ require_once __DIR__ . '/../connexion/db.php';
 session_start();
 $success = null;
 $error = [];
-
+$nom=null;
+$capacite=null;
 //to do : ajouter champe civilité 
 
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
-        $nom          =       htmlspecialchars(trim($_POST['nom']));
-        $civilite          =       htmlspecialchars(trim($_POST['civilite']));
+        $nom          =       htmlspecialchars(trim($_POST['nom'] ?? ''));
+
+        $civilite     =       htmlspecialchars(trim($_POST['civilite']));
         $capacite     =       htmlspecialchars(trim($_POST['capacite']));
         $type         =       htmlspecialchars(trim($_POST['type']));
         $dateDebut    =       htmlspecialchars(trim($_POST['dateDebut']));
@@ -125,7 +127,7 @@ if (isset($_POST['submit'])) {
                 <label>M.</label>
                 <input type="radio" name="civilite" value="Mme" id="">
                 <label>Mme.</label> 
-                <input class="form-control mt-1" type="text" name="nom" placeholder="Nom" required>
+                <input class="form-control mt-1" type="text" name="nom" placeholder="Nom"  value="<?= $nom ?>" required>
             </div>
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>

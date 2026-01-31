@@ -3,9 +3,10 @@ require_once('_partial/header.php');
 
 require_once __DIR__ . '/connexion/db.php';
 
-$entree='2026-03-16';
-
+$entree='2026-02-02';
 $week = $_GET['week'] ?? $entree;
+
+//pour la BDD
 $debutSemaine = date('Y-m-d 09:00:00', strtotime($week));
 $finSemaine   = date('Y-m-d 17:00:00', strtotime($week . ' +6 days'));
 
@@ -34,7 +35,7 @@ $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-function convert($reser)
+function convert($reser,$debutSemaine,$finSemaine)
 {
     $formatter = new IntlDateFormatter(
         'fr_FR',
@@ -48,27 +49,49 @@ function convert($reser)
     $heureDebut = date("H", strtotime($reser['dateHeure_debut']));
     $heureFin = date("H", strtotime($reser['dateHeure_fin']));
 
-    $jourDebut = $formatter->format(new DateTime($reser['dateHeure_debut']));
+
+    
+
+    //traitement de date jour et fin en format complet sans heure
+    $dateFin=date('Y-m-d', strtotime($reser['dateHeure_fin']));
+    $dateDebut=date('Y-m-d', strtotime($reser['dateHeure_debut']));
+
+    //traitement de la semaine presente
+    
+    $debutSemaine=date('Y-m-d',strtotime( $debutSemaine));
+    $finSemaine=date('Y-m-d', strtotime($finSemaine));
+
+    $result="not yet";
+
+    if($dateFin >= $debutSemaine && $dateFin <= $finSemaine && $dateDebut < $debutSemaine){
+
+    
+        $dateDebut=$debutSemaine;   
+        $result="this is the case : ".$dateDebut;
+    }
+
+    $dateFinN=date('d', strtotime($dateFin));
+    $dateDebutN=date('d', strtotime($dateDebut));
+
+    
+    $jourDebut = $formatter->format(new DateTime($dateDebut));
     $jourFin = $formatter->format(new DateTime($reser['dateHeure_fin']));
-
-    $dateFin=date('d', strtotime($reser['dateHeure_fin']));
-    $dateDebut=date('d', strtotime($reser['dateHeure_debut']));
-
-    $difJour = date('d', strtotime($reser['dateHeure_fin'])) - date('d', strtotime($reser['dateHeure_debut']));
+    $difJour = $dateFinN- $dateDebutN;
 
     $reser['jourDebut'] = $jourDebut;
     $reser['jourFin'] = $jourFin;
     $reser['difJour'] = $difJour;
     $reser['heureDebut'] = $heureDebut;
     $reser['heureFin'] = $heureFin;
-    $reser['dateDebut'] = $dateDebut;
-    $reser['dateFin'] = $dateFin;
-
+    $reser['dateDebut'] = $dateDebutN;
+    $reser['dateFin'] = $dateFinN;
+    $reser['result'] = $result;
+    // var_dump($reser);
     return $reser;
 }
 
 foreach ($reservations as $key => $reser) {
-    $reservations[$key] = convert($reser);
+    $reservations[$key] = convert($reser,$debutSemaine,$finSemaine);
 }
 
 
@@ -77,7 +100,7 @@ function span($reser)
 
     switch (true) {
         case $reser['difJour'] == 0:
-            echo 'grid-span-1 bg-dark text-light';
+            echo 'grid-span-1 bg-danger text-light';
             break;
         case $reser['difJour'] == 1:
             echo 'grid-span-2 bg-info text-dark';
@@ -89,16 +112,17 @@ function span($reser)
             echo 'grid-span-4 bg-success text-light';
             break;
         case $reser['difJour'] == 4:
-            echo 'grid-span-5 bg-primary text-light';
+            echo 'grid-span-5 bg-darkblue text-light';
             break;
         case $reser['difJour'] == 5:
-            echo 'grid-span-6 bg-light text-dark';
+            echo 'grid-span-6 bg-dark text-dark';
             break;
         case $reser['difJour'] >= 6:   // 6 or more
-            echo 'grid-span-7';
+            echo 'grid-span-7 bg-dark text-light';
             break;
     }
 }
+
 function startGrid($reser)
 {
 
@@ -136,14 +160,23 @@ function startGrid($reser)
     <h1 class="fs-1 text-center text-light mb-5">Planning de réservations par semaine</h1>
     <!-- debut de la table  -->
 
+     <!-- buttons  -->
+
+
+    <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2 mb-5">
+        <a href="?week=<?php lastWeek($week) ?>" class="btn btn-primary"><img src="/SiteReservation/assets/fleche-gauche.png" alt="Logo" height="20"> Semaine précédente</button>
+        <a href="?week=<?php nextWeek($week) ?>" class="btn btn-primary">Semaine suivante <img src="/SiteReservation/assets/fleche-droite.png" alt="Logo" height="20"></a>
+    </div>
+
+    <!-- semaine  -->
     <div class="grid-7 mb-5 text-start ">
-        <div class="box">Lundi</div>
-        <div class="box">Mardi</div>
-        <div class="box">Mercredi</div>
-        <div class="box">Jeudi</div>
-        <div class="box">Vendredi</div>
-        <div class="box">Samedi</div>
-        <div class="box">Dimanche</div>
+        <div class="box">Lundi <p><?= date('d-m', strtotime($week ));?></p></div>
+        <div class="box">Mardi <p><?= date('d-m', strtotime($week . ' +1 days')); ?></p></div>
+        <div class="box">Mercredi <p><?= date('d-m', strtotime($week . ' +2 days')); ?></p></div>
+        <div class="box">Jeudi <p><?= date('d-m', strtotime($week . ' +3 days')); ?></p></div>
+        <div class="box">Vendredi <p><?= date('d-m', strtotime($week . ' +4 days')); ?></p></div>
+        <div class="box">Samedi <p><?= date('d-m', strtotime($week . ' +5 days')); ?></p></div>
+        <div class="box">Dimanche <p><?= date('d-m', strtotime($week . ' +6 days')); ?></p></div>
     </div>
     <div class="grid-7 mb-5 bg-bleu">
         
@@ -151,13 +184,13 @@ function startGrid($reser)
         if(!$reservations){
         echo '<h5 class="grid-start-3 grid-span-3 py-2">Pas de reservation pour cette semaine</h5>';
         } else {
-        foreach ($reservations as $reser) {
+        foreach ($reservations as $reser) { 
         ?>
 
-            <div class="box <?php span($reser);
-                            startGrid($reser); ?>">
+            <div class="box <?php span($reser); startGrid($reser); ?>">
+                            
                 <p class="text-capitalize">Réservé par <?= $reser['nom'] ?></p>
-                <p class="text-capitalize">De <?= $reser['jourDebut'] . $reser['dateDebut']. ' ' . $reser['heureDebut'] . 'h  à ' .$reser['dateFin']. $reser['jourFin'] . ' ' . $reser['heureFin']  . 'h'  ?>
+                <p class="text-capitalize">De <?= $reser['jourDebut'] .' '. $reser['dateDebut']. ' ' . $reser['heureDebut'] . 'h - à ' .$reser['dateFin'].' '. $reser['jourFin'] . ' ' . $reser['heureFin']  . 'h'  ?>
                 </p>
                 <p class="text-capitalize">Salle : <?= $reser['libelle'] ?></p>
             </div>
@@ -170,13 +203,7 @@ function startGrid($reser)
 
 
 
-    <!-- buttons  -->
-
-
-    <div class="d-flex flex-column flex-md-row justify-content-md-between gap-2 mt-5">
-        <a href="?week=<?php lastWeek($week) ?>" class="btn btn-primary"><img src="/SiteReservation/assets/fleche-gauche.png" alt="Logo" height="20"> Semaine précédente</button>
-        <a href="?week=<?php nextWeek($week) ?>" class="btn btn-primary">Semaine suivante <img src="/SiteReservation/assets/fleche-droite.png" alt="Logo" height="20"></a>
-    </div>
+   
 
 
 

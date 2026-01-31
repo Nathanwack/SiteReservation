@@ -13,8 +13,13 @@ body {
   background-color: #afafaf;
 }
 .bg-bleu{
-  background-color: #63daf5;
+  background-color: #b1d9e2;
 }
+
+.bg-darkblue{
+  background-color: #1b0d4d !important;
+}
+
 
 a{
   text-decoration: none;
@@ -180,7 +185,7 @@ footer {
 /* ITEMS */
 .box {
   background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  border: 1px solid #000000;
   text-align: center;
   padding: 1rem;
   font-weight: 600;
