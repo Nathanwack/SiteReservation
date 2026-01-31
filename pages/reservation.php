@@ -7,9 +7,9 @@ $success = null;
 $error = [];
 $nom=null;
 $capacite=null;
-
-
-
+$type=null;
+$dateDebut=null;
+$dateFin=null;
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
@@ -50,15 +50,11 @@ if (isset($_POST['submit'])) {
         }
         if (!$dateDebut) {
             $error[] = "Veuillez choisir une date debut ";
-        } else {
-            $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         }
 
         if (!$dateFin) {
             $error[] = "Veuillez choisir une date fin  ";
-        } else {
-            $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
-        }
+        } 
 
         
 
@@ -67,6 +63,9 @@ if (isset($_POST['submit'])) {
         if (!$error) {
 
         $nomC=$civilite.'. '.$nom;
+        
+        $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
+        $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
 
             $sql = "SELECT s.*
                 FROM salle s
@@ -125,7 +124,7 @@ if (isset($_POST['submit'])) {
                 <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
                 <input type="radio" name="civilite" value="M" id="" >
                 <label>M.</label>
-                <input type="radio" name="civilite" value="Mme" id="" selected>
+                <input type="radio" name="civilite" value="Mme" id="" checked>
                 <label>Mme.</label> 
                 <input class="form-control mt-1" type="text" name="nom" placeholder="Nom"  value="<?= $nom ?>" required>
             </div>
@@ -134,9 +133,9 @@ if (isset($_POST['submit'])) {
                 <label for="type" class="form-label">Type de salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
                     <option selected>Choisir un type de salle</option>
-                    <option value="open-space">Open-space</option>
-                    <option value="bureau">Bureau</option>
-                    <option value="salle de réunion">Salle de réunion</option>
+                    <option value="open-space" <?= ($type === 'open-space')  ? 'selected' : '' ?>>Open-space</option>
+                    <option value="bureau" <?= ($type === 'bureau')  ? 'selected' : '' ?>>Bureau</option>
+                    <option value="salle de réunion" <?= ($type === 'salle de réunion')  ? 'selected' : '' ?>>Salle de réunion</option>
                 </select>
             </div>
 
@@ -144,15 +143,15 @@ if (isset($_POST['submit'])) {
                 <label for="capacite" class="form-label">Capacité :</label>
                 <select class="form-select" aria-label="Default select example" name="capacite" required>
                     <option selected>Choisir une capacité</option>
-                    <option value="5">0 à 5 personnes</option>
-                    <option value="10">5 à 10 personnes</option>
-                    <option value="50">10 à 50 personnes</option>
-                    <option value="100">50 à 100 personnes</option>
+                    <option value="5" <?= ($capacite == 5)  ? 'selected' : '' ?> >0 à 5 personnes</option>
+                    <option value="10" <?= ($capacite == 10)  ? 'selected' : '' ?> >5 à 10 personnes</option>
+                    <option value="50" <?= ($capacite == 50)  ? 'selected' : '' ?>>10 à 50 personnes</option>
+                    <option value="100" <?= ($capacite == 100)  ? 'selected' : '' ?>>50 à 100 personnes</option>
                 </select>
             </div>
             <div class="my-3">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="date" name="dateDebut" id="date" min="2026-02-02" max="2026-04-29" required>
+                <input type="date" name="dateDebut" id="date" min="2026-02-02" max="2026-04-29" value="<?= $dateDebut ?>" required>
                 <select name="heureDebut">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -167,7 +166,7 @@ if (isset($_POST['submit'])) {
 
             <div class="my-3">
                 <label for="dateFin" class="form-label">Date et heure de fin :</label>
-                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required>
+                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required value="<?= $dateFin ?>">
                 <select name="heureFin">
                     <option value="9">9</option>
                     <option value="10">10</option>
