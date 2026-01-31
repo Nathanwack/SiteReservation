@@ -3,6 +3,9 @@ require_once __DIR__ . '/../_partial/header.php';
 require_once __DIR__ . '/../connexion/db.php';
 
 session_start();
+
+
+
 $success = null;
 $error = [];
 $nom=null;
@@ -10,6 +13,17 @@ $capacite=null;
 $type=null;
 $dateDebut=null;
 $dateFin=null;
+
+$sqlSalles="SELECT DISTINCT type FROM salle";
+
+$stmt = $pdo->query($sqlSalles);
+$salles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// var_dump($salles);
+// foreach($salles as $salle){
+//     echo $salle['type'];
+// }
+
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
 
@@ -56,14 +70,13 @@ if (isset($_POST['submit'])) {
             $error[] = "Veuillez choisir une date fin  ";
         } 
 
-        
 
         // var_dump($_POST);
 
         if (!$error) {
 
         $nomC=$civilite.'. '.$nom;
-        
+
         $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
 
@@ -133,9 +146,9 @@ if (isset($_POST['submit'])) {
                 <label for="type" class="form-label">Type de salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
                     <option selected>Choisir un type de salle</option>
-                    <option value="open-space" <?= ($type === 'open-space')  ? 'selected' : '' ?>>Open-space</option>
-                    <option value="bureau" <?= ($type === 'bureau')  ? 'selected' : '' ?>>Bureau</option>
-                    <option value="salle de réunion" <?= ($type === 'salle de réunion')  ? 'selected' : '' ?>>Salle de réunion</option>
+                    <?php foreach($salles as $salle){?>
+                    <option class="capitalize" value=<?= $salle['type'] ?> <?= ($type === $salle['type'])  ? 'selected' : '' ?> ><?= ucfirst($salle['type']) ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
