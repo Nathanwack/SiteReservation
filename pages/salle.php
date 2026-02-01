@@ -51,6 +51,7 @@ if (isset($_POST['delete']) && !empty($_POST['salle_id'])) {
 
         if ($resultatSupprimer) {
             $supprime = "La salle a bien été supprimé";
+            header("Refresh:10; url=salle.php");
         } else {
             $error[] = "Une erreur lors de suppression de l'article";
         }
@@ -70,9 +71,10 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
         'id' => $salleAModifier
     ]);
     // récuperer les données de salle a modifier
+    
 
     $resultatSalleRecu = $stmtSalleEdit->fetch(PDO::FETCH_ASSOC);
-
+    var_dump($resultatSalleRecu);
 
     $libelle  =       $resultatSalleRecu['libelle'];
     $capacite =       $resultatSalleRecu['capacite'];
@@ -123,6 +125,8 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
                 
                 if ($resultat) {
                     $success = "La salle a bien été mise à jour en BDD";
+                    header("Refresh:10; url=salle.php");
+
                 } else {
                     $error[] = "Erreur lors de la mise à jour en BDD";
                 }
@@ -182,6 +186,7 @@ if (isset($_POST['submit'])) {
 
             if ($resultat) {
                 $success = "La salle est bien ajouté en BDD";
+                header("Refresh:10; url=salle.php");
             } else {
                 $error[] = "Erreur lors d'insertion en BDD";
             }
@@ -209,9 +214,9 @@ if (isset($_POST['submit'])) {
             <label>Type du salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
                 <option value="not-valid" selected>Choisir le type de salle</option>
-                <option value="Open-space" <?= ($type === 'open-space')  ? 'selected' : '' ?>>Open-space</option>
-                <option value="Bureau" <?= ($type === 'bureau')  ? 'selected' : '' ?>>Bureau</option>
-                <option value="Salle de réunion" <?= ($type === 'Salle de réunion')  ? 'selected' : '' ?>>Salle de réunion</option>
+                <option value="Open-space" <?=  (isset($type) && strcasecmp($type, 'Open-space') == 0 )  ? 'selected' : '' ?>>Open-space</option>
+                <option value="Bureau" <?= ( isset($type) && strcasecmp($type, 'bureau') == 0 )   ? 'selected' : '' ?>>Bureau</option>
+                <option value="Salle de réunion" <?= (isset($type) && strcasecmp($type, 'salle de réunion') == 0 )   ? 'selected' : '' ?>>Salle de réunion</option>
             </select>
 
             <div class="my-3">
