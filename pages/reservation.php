@@ -48,10 +48,10 @@ if (isset($_POST['submit'])) {
             $error[] = "Nom ne peut contenir que des lettres";
         }
         
-        if (!$capacite) {
-            $error[] = "Veuillez choisir la capacité souhaité";
+        if ($capacite=="not-valid") {
+            $error[] = "Veuillez choisir une capacité ";
         }
-        if (!$type) {
+        if ($type=="not-valid") {
             $error[] = "Veuillez choisir un type pour la salle  ";
         }
 
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
-                    <option selected>Choisir un type de salle</option>
+                    <option value="not-valid" selected>Choisir un type de salle</option>
                     <?php foreach($salles as $salle){?>
                     <option class="capitalize" value=<?= $salle['type'] ?> <?= ($type === $salle['type'])  ? 'selected' : '' ?> ><?= ucfirst($salle['type']) ?></option>
                     <?php } ?>
@@ -155,7 +155,7 @@ if (isset($_POST['submit'])) {
             <div class="my-3 ">
                 <label for="capacite" class="form-label">Capacité :</label>
                 <select class="form-select" aria-label="Default select example" name="capacite" required>
-                    <option selected>Choisir une capacité</option>
+                    <option value="not-valid" selected>Choisir une capacité</option>
                     <option value="5" <?= ($capacite == 5)  ? 'selected' : '' ?> >0 à 5 personnes</option>
                     <option value="10" <?= ($capacite == 10)  ? 'selected' : '' ?> >5 à 10 personnes</option>
                     <option value="50" <?= ($capacite == 50)  ? 'selected' : '' ?>>10 à 50 personnes</option>
@@ -201,7 +201,7 @@ if (isset($_POST['submit'])) {
       <?php  if ($error) {
         foreach ($error as $err) { ?>
 
-            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-1">
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-3">
                 <?= $err;  } }?> </p>
            
     </div>

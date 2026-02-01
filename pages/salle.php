@@ -29,14 +29,14 @@ if (isset($_POST['submit'])) {
             $error[] = "Capacité ne peut etre vide ";
         }
 
-        if (!$type) {
-            $error[] = "Veuillez choisir un type pour la salle  ";
+        if ($type=="not-valid") {
+            $error[] = "Veuillez choisir un type pour la salle";
         }
 
         if ($type == "Choisir le nom du salle") {
             $error[] = "Veuillez choisir un type valide pour la salle  ";
         }
-        // var_dump($_POST);
+         var_dump($_POST);
 
         $sqlSalles = "SELECT libelle FROM salle";
         $stmt = $pdo->query($sqlSalles);
@@ -88,10 +88,10 @@ if (isset($_POST['submit'])) {
 
             <label>Type du salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
-                <option selected>Choisir le type de salle</option>
-                <option value="1">Open-space</option>
-                <option value="2">Bureau</option>
-                <option value="3">Salle de reunion</option>
+                <option value="not-valid" selected>Choisir le type de salle</option>
+                <option value="Open-space">Open-space</option>
+                <option value="Bureau">Bureau</option>
+                <option value="Salle de reunion">Salle de reunion</option>
             </select>
 
             <div class="my-3">
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 
         foreach ($error as $err) { ?>
 
-            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded "><?= $err;
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-3 "><?= $err;
                                                                         } ?> </p>
 
         <?php
