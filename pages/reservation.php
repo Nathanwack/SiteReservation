@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
                 <select class="form-select" aria-label="Default select example" name="type" required>
                     <option value="not-valid" selected>Choisir un type de salle</option>
                     <?php foreach($salles as $salle){?>
-                    <option class="capitalize" value=<?= $salle['type'] ?> <?= ($type === $salle['type'])  ? 'selected' : '' ?> ><?= ucfirst($salle['type']) ?></option>
+                    <option value=<?= $salle['type'] ?> <?= ($type === $salle['type'])  ? 'selected' : '' ?> ><?= ucfirst($salle['type']) ?></option>
                     <?php } ?>
                 </select>
             </div>
