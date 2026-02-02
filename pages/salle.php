@@ -76,7 +76,7 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
     
 
     $resultatSalleRecu = $stmtSalleEdit->fetch(PDO::FETCH_ASSOC);
-    var_dump($resultatSalleRecu);
+    // var_dump($resultatSalleRecu);
 
     $libelle  =       $resultatSalleRecu['libelle'];
     $capacite =       $resultatSalleRecu['capacite'];

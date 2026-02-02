@@ -2,7 +2,10 @@
 require_once __DIR__ . '/../_partial/header.php';
 require_once __DIR__ . '/../connexion/db.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // var_dump($_SESSION);
 $success = null;
 $error = [];
