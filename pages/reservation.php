@@ -194,7 +194,8 @@ if (isset($_POST['submit'])) {
             </div>
 
             <input class="btn btn-primary" type="submit" name="submit" value="Rechercher une disponiblité" />
-        </form>    
+        </form>   
+        
     </div>
     
 
@@ -203,11 +204,10 @@ if (isset($_POST['submit'])) {
 
             <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-3">
                 <?= $err;  } }?> </p>
-           
+    <a href="planning.php" class="p-2 rounded text-center bg-warning ">Voir toutes les reservations</a>
     </div>
 
-    <a href="planning.php" class="p-5 bg-warning">Voir toutes les reservation</a>
-
+    
 
     <?php
     require_once('../_partial/footer.php');

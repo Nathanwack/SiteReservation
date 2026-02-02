@@ -45,11 +45,11 @@ function dateFin($reser){
     $dateFin   = date('Y-m-d', $timestampFin);
     echo $dateFin.' à '.$heureFin.'h';
 }
-var_dump($_POST) ;
+// var_dump($_POST) ;
 if (isset($_POST['delete']) && !empty($_POST['id'])) {
 
     
-    var_dump($_POST) ;
+    // var_dump($_POST) ;
 
     $reservAsupprimer = htmlspecialchars(trim($_POST['id']));
 
@@ -82,8 +82,8 @@ if (isset($_POST['delete']) && !empty($_POST['id'])) {
 <div class="container mt-5">
     <?php if ($supprime) { ?>
 
-        <p class="text-center bg-danger p-3 mx-5 fs-4 rounded mt-3  "><?= $supprime;
-                                                                    } ?> </p>
+        <p class="text-center bg-danger p-3 mx-5 fs-4 rounded mt-3  "><?= $supprime;} ?> </p>
+          
     <table class="table table-striped rounded text-center">
         <thead class="bg-info text-light">
             <tr>
@@ -121,6 +121,8 @@ if (isset($_POST['delete']) && !empty($_POST['id'])) {
         </tbody>
     </table>
 </div>
+
+  
 
 <?php
 require_once __DIR__ . '/../_partial/footer.php';
