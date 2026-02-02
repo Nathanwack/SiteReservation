@@ -38,36 +38,36 @@ if (isset($_POST['submit'])) {
        
 
         if (!$civilite) {
-            $error[] = "Veuillez choisir le civilité ";
+            $error[] = "Veuillez choisir une civilité";
         }
 
         if (!$nom) {
-            $error[] = "Libelle ne peut etre vide ";
+            $error[] = "Le libellé ne peut être vide ";
         }
         elseif(!preg_match("/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/", $nom)){
-            $error[] = "Nom ne peut contenir que des lettres";
+            $error[] = "Le nom ne peut contenir que des lettres";
         }
         
         if ($capacite=="not-valid") {
-            $error[] = "Veuillez choisir une capacité ";
+            $error[] = "Veuillez choisir une capacité";
         }
         if ($type=="not-valid") {
-            $error[] = "Veuillez choisir un type pour la salle  ";
+            $error[] = "Veuillez choisir un type pour la salle";
         }
 
         if($dateDebut>$dateFin){
-            $error[]="La date de fin ne peut etre inferieur de la date de début";
+            $error[]="La date de fin ne peut être inferieure à la date de début";
         }
         
         if($dateDebut==$dateFin && $heureDebut >= $heureFin  ){
-            $error[]="L'heure de fin ne peut etre inferieur / égale de l'heure de début";
+            $error[]="L'heure de fin ne peut etre inferieure ou égale à l'heure de début";
         }
         if (!$dateDebut) {
-            $error[] = "Veuillez choisir une date debut ";
+            $error[] = "Veuillez choisir une date debut";
         }
 
         if (!$dateFin) {
-            $error[] = "Veuillez choisir une date fin  ";
+            $error[] = "Veuillez choisir une date fin";
         } 
 
 
@@ -117,11 +117,11 @@ if (isset($_POST['submit'])) {
                     header('Location: resultatRecherche.php');
                     exit;
                 } else {
-                    $error[] = "Aucune salle disponible pour cette période.";
+                    $error[] = "Aucune salle disponible pour cette période";
                 }
             }
             else {
-                $error[] = "il y a une erreur lors de la recherche ; veuillez reessayer plus tard.";
+                $error[] = "Une erreur s'est produite lors de la recherche ; veuillez reessayer plus tard.";
             }
         }
     }
@@ -130,7 +130,7 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="container p-5">
-    <h1 class="fs-1 text-center text-light my-5">Formulaire de réservation de salles</h1>
+    <h1 class="fs-1 text-center text-light my-5">Réserver une salle</h1>
     <div class="form-salle col-12 center p-5">
         <form action="" method="post">
             <div class="my-3 ">

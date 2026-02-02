@@ -50,10 +50,10 @@ if (isset($_POST['delete']) && !empty($_POST['salle_id'])) {
 
 
         if ($resultatSupprimer) {
-            $supprime = "La salle a bien été supprimé";
+            $supprime = "La salle a bien été supprimée";
             header("Refresh:10; url=salle.php");
         } else {
-            $error[] = "Une erreur lors de suppression de l'article";
+            $error[] = "Une erreur est survenue lors de la suppression de l'article";
         }
     }
 }
@@ -102,7 +102,7 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
                 $error[] = "Veuillez choisir un type pour la salle";
             }
 
-            if ($type == "Choisir le nom du salle") {
+            if ($type == "Choisir le nom de la salle") {
                 $error[] = "Veuillez choisir un type valide pour la salle  ";
             }
             // var_dump($_POST);
@@ -157,8 +157,8 @@ if (isset($_POST['submit'])) {
             $error[] = "Veuillez choisir un type pour la salle";
         }
 
-        if ($type == "Choisir le nom du salle") {
-            $error[] = "Veuillez choisir un type valide pour la salle  ";
+        if ($type == "Choisir le nom de la salle") {
+            $error[] = "Veuillez choisir un type valide pour la salle";
         }
         var_dump($_POST);
 
@@ -185,10 +185,10 @@ if (isset($_POST['submit'])) {
             ));
 
             if ($resultat) {
-                $success = "La salle est bien ajouté en BDD";
+                $success = "La salle est bien ajoutée en BDD";
                 header("Refresh:10; url=salle.php");
             } else {
-                $error[] = "Erreur lors d'insertion en BDD";
+                $error[] = "Erreur lors de l'insertion en BDD";
             }
         }
     }
@@ -211,7 +211,7 @@ if (isset($_POST['submit'])) {
                 <input type="text" name="libelle" class="form-control" id="libelle" placeholder="libelle" required value=<?= $libelle ?>>
             </div>
 
-            <label>Type du salle</label>
+            <label>Type de salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
                 <option value="not-valid" selected>Choisir le type de salle</option>
                 <option value="Open-space" <?=  (isset($type) && strcasecmp($type, 'Open-space') == 0 )  ? 'selected' : '' ?>>Open-space</option>
@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
 
             <div class="my-3">
                 <label for="capacite" class="form-label">Capacité</label>
-                <input type="number" name="capacite" min="1" max="100" class="form-control" id="capacite" placeholder="La capacité du salle" value=<?= $capacite ?> required>
+                <input type="number" name="capacite" min="1" max="100" class="form-control" id="capacite" placeholder="La capacité de la salle" value=<?= $capacite ?> required>
             </div>
             <?php if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
             ?>
