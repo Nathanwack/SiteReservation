@@ -3,12 +3,26 @@ require_once __DIR__ . '/../_partial/header.php';
 require_once __DIR__ . '/../connexion/db.php';
 
 session_start();
+
+
+
 $success = null;
 $error = [];
 $nom=null;
 $capacite=null;
+$type=null;
+$dateDebut=null;
+$dateFin=null;
 
+$sqlSalles="SELECT DISTINCT type FROM salle";
 
+$stmt = $pdo->query($sqlSalles);
+$salles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// var_dump($salles);
+// foreach($salles as $salle){
+//     echo $salle['type'];
+// }
 
 if (isset($_POST['submit'])) {
     if (!empty($_POST['nom']) && !empty($_POST['civilite']) &&!empty($_POST['type']) && !empty($_POST['capacite']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin']) && !empty($_POST['heureDebut']) && !empty($_POST['heureFin'])) {
@@ -24,49 +38,47 @@ if (isset($_POST['submit'])) {
        
 
         if (!$civilite) {
-            $error[] = "Veuillez choisir le civilité ";
+            $error[] = "Veuillez choisir une civilité";
         }
 
         if (!$nom) {
-            $error[] = "Libelle ne peut etre vide ";
+            $error[] = "Le libellé ne peut être vide ";
         }
         elseif(!preg_match("/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/", $nom)){
-            $error[] = "Nom ne peut contenir que des lettres";
+            $error[] = "Le nom ne peut contenir que des lettres";
         }
         
-        if (!$capacite) {
-            $error[] = "Veuillez choisir la capacité souhaité";
+        if ($capacite=="not-valid") {
+            $error[] = "Veuillez choisir une capacité";
         }
-        if (!$type) {
-            $error[] = "Veuillez choisir un type pour la salle  ";
+        if ($type=="not-valid") {
+            $error[] = "Veuillez choisir un type pour la salle";
         }
 
         if($dateDebut>$dateFin){
-            $error[]="La date de fin ne peut etre inferieur de la date de début";
+            $error[]="La date de fin ne peut être inferieure à la date de début";
         }
         
         if($dateDebut==$dateFin && $heureDebut >= $heureFin  ){
-            $error[]="L'heure de fin ne peut etre inferieur / égale de l'heure de début";
+            $error[]="L'heure de fin ne peut etre inferieure ou égale à l'heure de début";
         }
         if (!$dateDebut) {
-            $error[] = "Veuillez choisir une date debut ";
-        } else {
-            $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
+            $error[] = "Veuillez choisir une date debut";
         }
 
         if (!$dateFin) {
-            $error[] = "Veuillez choisir une date fin  ";
-        } else {
-            $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
-        }
+            $error[] = "Veuillez choisir une date fin";
+        } 
 
-        
 
         // var_dump($_POST);
 
         if (!$error) {
 
         $nomC=$civilite.'. '.$nom;
+
+        $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
+        $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
 
             $sql = "SELECT s.*
                 FROM salle s
@@ -105,11 +117,11 @@ if (isset($_POST['submit'])) {
                     header('Location: resultatRecherche.php');
                     exit;
                 } else {
-                    $error[] = "Aucune salle disponible pour cette période.";
+                    $error[] = "Aucune salle disponible pour cette période";
                 }
             }
             else {
-                $error[] = "il y a une erreur lors de la recherche ; veuillez reessayer plus tard.";
+                $error[] = "Une erreur s'est produite lors de la recherche ; veuillez reessayer plus tard.";
             }
         }
     }
@@ -118,14 +130,14 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="container p-5">
-    <h1 class="fs-1 text-center text-light my-5">Formulaire de réservation de salles</h1>
+    <h1 class="fs-1 text-center text-light my-5">Réserver une salle</h1>
     <div class="form-salle col-12 center p-5">
         <form action="" method="post">
             <div class="my-3 ">
                 <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
                 <input type="radio" name="civilite" value="M" id="" >
                 <label>M.</label>
-                <input type="radio" name="civilite" value="Mme" id="" selected>
+                <input type="radio" name="civilite" value="Mme" id="" checked>
                 <label>Mme.</label> 
                 <input class="form-control mt-1" type="text" name="nom" placeholder="Nom"  value="<?= $nom ?>" required>
             </div>
@@ -133,26 +145,26 @@ if (isset($_POST['submit'])) {
             <div class="my-3 ">
                 <label for="type" class="form-label">Type de la salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
-                    <option selected>Choisir un type de salle</option>
-                    <option value="open-space">Open-space</option>
-                    <option value="bureau">Bureau</option>
-                    <option value="salle de réunion">Salle de réunion</option>
+                    <option value="not-valid" selected>Choisir un type de salle</option>
+                    <?php foreach($salles as $salle){?>
+                    <option class="capitalize" value=<?= $salle['type'] ?> <?= ($type === $salle['type'])  ? 'selected' : '' ?> ><?= ucfirst($salle['type']) ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
             <div class="my-3 ">
                 <label for="capacite" class="form-label">Capacité :</label>
                 <select class="form-select" aria-label="Default select example" name="capacite" required>
-                    <option selected>Choisir une capacité</option>
-                    <option value="5">0 à 5 personnes</option>
-                    <option value="10">5 à 10 personnes</option>
-                    <option value="50">10 à 50 personnes</option>
-                    <option value="100">50 à 100 personnes</option>
+                    <option value="not-valid" selected>Choisir une capacité</option>
+                    <option value="5" <?= ($capacite == 5)  ? 'selected' : '' ?> >0 à 5 personnes</option>
+                    <option value="10" <?= ($capacite == 10)  ? 'selected' : '' ?> >5 à 10 personnes</option>
+                    <option value="50" <?= ($capacite == 50)  ? 'selected' : '' ?>>10 à 50 personnes</option>
+                    <option value="100" <?= ($capacite == 100)  ? 'selected' : '' ?>>50 à 100 personnes</option>
                 </select>
             </div>
             <div class="my-3">
                 <label for="dateDebut" class="form-label">Date et heure de début :</label>
-                <input type="date" name="dateDebut" id="date" min="2026-02-02" max="2026-04-29" required>
+                <input type="date" name="dateDebut" id="date" min="2026-02-02" max="2026-04-29" value="<?= $dateDebut ?>" required>
                 <select name="heureDebut">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -167,7 +179,7 @@ if (isset($_POST['submit'])) {
 
             <div class="my-3">
                 <label for="dateFin" class="form-label">Date et heure de fin :</label>
-                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required>
+                <input type="date" name="dateFin" id="date" min="2026-02-01" max="2026-04-30" required value="<?= $dateFin ?>">
                 <select name="heureFin">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -189,7 +201,7 @@ if (isset($_POST['submit'])) {
       <?php  if ($error) {
         foreach ($error as $err) { ?>
 
-            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-1">
+            <p class="text-center bg-danger-subtle p-3 mx-5 fs-4 rounded mt-3">
                 <?= $err;  } }?> </p>
            
     </div>

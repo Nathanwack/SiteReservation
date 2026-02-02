@@ -31,9 +31,9 @@ $heureF = $dateFinDT->format('H:i');
 
 
 if ($dateD == $dateF) {
-    $message = $dateD . " de  " . $heureD . " à " . $heureF;
+    " du " . $message = $dateD . " de  " . $heureD . " à " . $heureF;
 } else {
-    $message = $dateD . " à " . $heureD . " jusqu'à " . $dateF . " à " . $heureF;
+    " du " . $message = $dateD . " à " . $heureD . " au " . $dateF . " à " . $heureF;
 }
 
 if (isset($_POST['submit'])) {
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
         ));
 
         if ($resultat) {
-             $success = "La reservation est bien enregistrée";
+             $success = "Votre reservation a bien été enregistrée";
             
         } else {
             $error[] = "Erreur lors d'insertion en BDD";
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
     <div class="bg-secondary p-5 mb-5 rounded">
         <p class="fs-5 text-light text-center ">Voici le résultat de votre recherche pour la période  </br></br>
             <?= $message ?><br>
-            et de'une salle du type  :
+            pour une salle du type  :
             <?= $type_salle ?>
         
         </p>

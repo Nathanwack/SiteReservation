@@ -183,7 +183,7 @@ function bgColor($reser){
 ?>
 
 <div class="container p-5">
-    <h1 class="fs-1 text-center text-light mb-5">Planning de réservations par semaine</h1>
+    <h1 class="fs-1 text-center text-light mb-5">Planning des réservations</h1>
     <!-- debut de la table  -->
 
      <!-- buttons  -->
