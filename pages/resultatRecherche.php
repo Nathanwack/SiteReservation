@@ -31,9 +31,9 @@ $heureF = $dateFinDT->format('H:i');
 
 
 if ($dateD == $dateF) {
-    $message = $dateD . " de  " . $heureD . " à " . $heureF;
+    " du " . $message = $dateD . " de  " . $heureD . " à " . $heureF;
 } else {
-    $message = $dateD . " à " . $heureD . " jusqu'à " . $dateF . " à " . $heureF;
+    " du " . $message = $dateD . " à " . $heureD . " au " . $dateF . " à " . $heureF;
 }
 
 if (isset($_POST['submit'])) {
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
         ));
 
         if ($resultat) {
-             $success = "La reservation est bien enregistrée";
+             $success = "Votre reservation a bien été enregistrée";
             
         } else {
             $error[] = "Erreur lors d'insertion en BDD";
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
     <div class="bg-secondary p-5 mb-5 rounded">
         <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode  </br></br>
             <?= $message ?><br>
-            et de'une salle du type  :
+            pour une salle du type  :
             <?= $type_salle ?>
         
         </p>
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
         <p class="fs-5 text-light text-center "> <?= $success." </br> pour ".$message;  ?></br>
 
         <a href="reservation.php"class="btn btn-info text-light mx-5 my-5">Faire une autre réservation </a> 
-        <a href="../index.php"class="btn btn-dark text-light">voir le planning des réservations</a> 
+        <a href="../index.php"class="btn btn-dark text-light">Voir le planning des réservations</a> 
 
         <?php }?>
            
