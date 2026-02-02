@@ -3,14 +3,25 @@ require_once __DIR__ . '/../_partial/header.php';
 require_once __DIR__ . '/../connexion/db.php';
 
 session_start();
-var_dump($_SESSION);
+// var_dump($_SESSION);
 $success = null;
 $error = [];
-
-if($_SESSION['reservation']!=null)
+$civilite=null;
+$dateDebut=null;
+$dateFin=null;
+$capacite=null;
+$heureDebut=null;
+$heureFin=null;
+if(isset($_SESSION['reservation']))
 {
 
 $nom=$_SESSION['reservation']['nom'];
+$parties = explode(" ", $nom);
+
+$civilite = $parties[0]; 
+$nom  = $parties[1]; 
+echo $civilite ; 
+echo $nom;
 
 $capacite=$_SESSION['reservation']['capacite'];
 $type=$_SESSION['reservation']['type'];;
@@ -96,7 +107,7 @@ if (isset($_POST['submit'])) {
 
         if (!$error) {
 
-        $nomC=$civilite.'. '.$nom;
+        $nomC=$civilite.' '.$nom;
 
         $dateDebut = $dateDebut . ' ' . $heureDebut . ':00:00';
         $dateFin = $dateFin . ' ' . $heureFin . ':00:00';
@@ -138,7 +149,9 @@ if (isset($_POST['submit'])) {
                     header('Location: resultatRecherche.php');
                     exit;
                 } else {
-                    $error[] = "Aucune salle disponible pour cette période";
+                    $error[] = "Aucune salle disponible pour cette période";                   
+                    header("Refresh:3; url=reservation.php");
+
                 }
             }
             else {
@@ -157,9 +170,9 @@ if (isset($_POST['submit'])) {
         <form action="" method="post">
             <div class="my-3 ">
                 <label for="nom" class="form-label">Nom :</label placeholder="dd"> </br>
-                <input type="radio" name="civilite" value="M" id="" >
+                <input type="radio" name="civilite" value=<?= ($civilite === 'M.')  ? 'selected' : 'M.' ?> id="" >
                 <label>M.</label>
-                <input type="radio" name="civilite" value="Mme" id="" checked>
+                <input type="radio" name="civilite" value=<?= ($civilite === 'Mm.')  ? 'selected' : 'Mme.' ?> id="" checked>
                 <label>Mme.</label> 
                 <input class="form-control mt-1" type="text" name="nom" placeholder="Nom"  value="<?= $nom ?>" required>
             </div>
@@ -215,7 +228,7 @@ if (isset($_POST['submit'])) {
                 
             </div>
 
-           <?php if($_SESSION['reservation']!=null) { ?>
+           <?php if(isset($_SESSION['reservation'])) { ?>
             <input class="btn btn-dark text-light" type="submit" name="submit" value="Mettre à jour la reservation " />
 
             <?php } else { ?>
