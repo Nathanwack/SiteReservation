@@ -29,29 +29,49 @@ $formatter = new IntlDateFormatter(
     'EEEE dd/MM/yyyy HH:mm'
 );
 
-foreach ($reserObj as $reser) {
 
-    
 
-    
-}
-
-function dateDebut($reser,){
+function dateDebut($reser){
 
     $timestampDebut = strtotime($reser['dateHeure_debut']);
     $heureDebut = date('H', $timestampDebut);
     $dateDebut = date('Y-m-d', $timestampDebut);
     echo $dateDebut.' à '.$heureDebut.'h';
 }
-function dateFin($reser,){
+function dateFin($reser){
 
     $timestampFin   = strtotime($reser['dateHeure_fin']);
     $heureFin   = date('H', $timestampFin);
     $dateFin   = date('Y-m-d', $timestampFin);
     echo $dateFin.' à '.$heureFin.'h';
 }
+var_dump($_POST) ;
+if (isset($_POST['delete']) && !empty($_POST['id'])) {
+
+    
+    var_dump($_POST) ;
+
+    $reservAsupprimer = htmlspecialchars(trim($_POST['id']));
+
+    // verifier si la salle a supprimer n'es pas deja reservé
+    //à regler : si method au dessus est get , le message success est quand meme affiché !!! 
+
+        $sqlReservDelete = "DELETE FROM reservation WHERE id = :id";
+        $stmtReservDelete = $pdo->prepare($sqlReservDelete);
+        $resultatSupprimer = $stmtReservDelete->execute([
+            'id' => $reservAsupprimer
+        ]);
 
 
+        if ($resultatSupprimer) {
+            $supprime = "La reservation a bien été supprimée";
+            header("Refresh:10; url=planning.php");
+        } else {
+            $error[] = "Une erreur est survenue lors de la suppression ";
+        }
+    }
+
+//fin traitment du suppression
 
 
 
@@ -60,6 +80,10 @@ function dateFin($reser,){
 
 
 <div class="container mt-5">
+    <?php if ($supprime) { ?>
+
+        <p class="text-center bg-danger p-3 mx-5 fs-4 rounded mt-3  "><?= $supprime;
+                                                                    } ?> </p>
     <table class="table table-striped rounded text-center">
         <thead class="bg-info text-light">
             <tr>
@@ -88,7 +112,7 @@ function dateFin($reser,){
                         <td><?= $reser['capacite'] ?></td>
                         <td><button class="btn btn-primary rounded p-1" name="edit">Modifier</button></td>
                         <td><button class="btn bg-danger rounded p-1 text-light" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?');">Supprimer</button></td>
-                        <input type="hidden" name="salle_id" value="<?= $reser['id'] ?>">
+                        <input type="hidden" name="id" value="<?= $reser['id'] ?>">
 
                     </form>
                 </tr>

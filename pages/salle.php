@@ -17,6 +17,8 @@ $stmtSalle = $pdo->prepare($sqlSalle);
 $stmtSalle->execute();
 
 $sallesObj = $stmtSalle->fetchAll(PDO::FETCH_ASSOC);
+
+
 //traitment de suppression d'une salle
 // var_dump($_GET);
 if (isset($_POST['delete']) && !empty($_POST['salle_id'])) {
