@@ -38,7 +38,7 @@ if ($dateD == $dateF) {
 
 if (isset($_POST['submit'])) {
     if (!empty($_POST['choix_reservation'])) {
-        var_dump($_POST);
+        //var_dump($_POST);
         $id_salle = htmlspecialchars(trim($_POST['choix_reservation']));
 
         $sql = "INSERT INTO reservation (dateHeure_debut, dateHeure_fin,nom,salle_id) 
