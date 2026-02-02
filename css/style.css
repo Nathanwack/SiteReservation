@@ -58,7 +58,7 @@ body {
   background-color: #fff;
   background-image: url(/SiteReservation/assets/background.png);
   background-attachment: fixed;
-  background-size: cover;
+  background-size:contain;
 }
 
 /* Typography */

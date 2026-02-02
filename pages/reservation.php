@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
             </div>
             
             <div class="my-3 ">
-                <label for="type" class="form-label">Type de salle :</label>
+                <label for="type" class="form-label">Type de la salle :</label>
                 <select class="form-select" aria-label="Default select example" name="type" required>
                     <option value="not-valid" selected>Choisir un type de salle</option>
                     <?php foreach($salles as $salle){?>

@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 
 <?php if(!$success){ ?>
     <div class="bg-secondary p-5 mb-5 rounded">
-        <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode  </br></br>
+        <p class="fs-5 text-light text-center ">Voici le résultat de votre recherche pour la période  </br></br>
             <?= $message ?><br>
             pour une salle du type  :
             <?= $type_salle ?>

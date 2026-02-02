@@ -213,12 +213,12 @@ if (isset($_POST['submit'])) {
                 <input type="text" name="libelle" class="form-control" id="libelle" placeholder="libelle" required value=<?= $libelle ?>>
             </div>
 
-            <label>Type de salle</label>
+            <label>Type de la salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
-                <option value="not-valid" selected>Choisir le type de salle</option>
-                <option value="Open-space" <?=  (isset($type) && strcasecmp($type, 'Open-space') == 0 )  ? 'selected' : '' ?>>Open-space</option>
-                <option value="Bureau" <?= ( isset($type) && strcasecmp($type, 'bureau') == 0 )   ? 'selected' : '' ?>>Bureau</option>
-                <option value="Salle de réunion" <?= (isset($type) && strcasecmp($type, 'salle de réunion') == 0 )   ? 'selected' : '' ?>>Salle de réunion</option>
+                <option selected>Choisir le type de la salle</option>
+                <option value="1">Open-space</option>
+                <option value="2">Bureau</option>
+                <option value="3">Salle de réunion</option>
             </select>
 
             <div class="my-3">
@@ -254,7 +254,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="salle_modif bg-dark px-5 py-2 col-6 mt-5 text-light text-center rounded mx-auto">
 
-                    <p class="text-center fs-4">Information de la salle </p>
+                <p class="text-center fs-4">Informations de la salle </p>
 
                     <hr class="bg-light">
 
@@ -286,7 +286,7 @@ if (isset($_POST['submit'])) {
         <thead class="bg-info text-light">
             <tr>
                 <th class="bg-dark text-light" scope="col"> </th>
-                <th class="bg-dark text-light" scope="col">Libellé de Salle</th>
+                <th class="bg-dark text-light" scope="col">Libellé de la Salle</th>
                 <th class="bg-dark text-light" scope="col">Type</th>
                 <th class="bg-dark text-light" scope="col">Capacité</th>
                 <th class="bg-dark text-light" scope="col">Action</th>
