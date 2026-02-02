@@ -127,6 +127,7 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
                 
                 if ($resultat) {
                     $success = "La salle a bien été mise à jour en BDD";
+                    $_SESSION=[];
                     header("Refresh:10; url=salle.php");
 
                 } else {
