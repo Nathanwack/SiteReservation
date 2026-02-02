@@ -82,7 +82,7 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
 
 }
     if (isset($_POST['modifier'])) {
-        var_dump($_POST);
+        //var_dump($_POST);
         if (!empty($_POST['libelle']) && !empty($_POST['capacite']) && !empty($_POST['type'])) {
 
             $libelle  =       htmlspecialchars(trim($_POST['libelle']));
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
         if ($type == "Choisir le nom de la salle") {
             $error[] = "Veuillez choisir un type valide pour la salle";
         }
-        var_dump($_POST);
+        //var_dump($_POST);
 
         $sqlSalles = "SELECT libelle FROM salle";
         $stmt = $pdo->query($sqlSalles);
