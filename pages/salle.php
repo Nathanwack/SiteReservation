@@ -103,6 +103,9 @@ if (isset($_POST['edit']) && !empty($_POST['salle_id'])) {
             if ($type == "not-valid") {
                 $error[] = "Veuillez choisir un type pour la salle";
             }
+             if ($type == "") {
+                $error[] = "Veuillez choisir un type pour la salle";
+            }
 
             if ($type == "Choisir le nom de la salle") {
                 $error[] = "Veuillez choisir un type valide pour la salle  ";
@@ -156,7 +159,7 @@ if (isset($_POST['submit'])) {
             $error[] = "Capacité ne peut etre vide ";
         }
 
-        if ($type == "not-valid") {
+        if ($type == "not_valid") {
             $error[] = "Veuillez choisir un type pour la salle";
         }
 
@@ -216,7 +219,7 @@ if (isset($_POST['submit'])) {
 
             <label>Type de la salle</label>
             <select class="form-select" aria-label="Default select example" required name="type">
-                <option selected>Choisir le type de la salle</option>
+                <option value="not_valid" selected>Choisir le type de la salle</option>
                 <option value="1">Open-space</option>
                 <option value="2">Bureau</option>
                 <option value="3">Salle de réunion</option>

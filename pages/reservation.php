@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
         $heureDebut   =       htmlspecialchars(trim($_POST['heureDebut']));
         $heureFin     =       htmlspecialchars(trim($_POST['heureFin']));
        
-
+    var_dump($_POST);
         if (!$civilite) {
             $error[] = "Veuillez choisir une civilité";
         }
@@ -87,6 +87,9 @@ if (isset($_POST['submit'])) {
             $error[] = "Veuillez choisir une capacité";
         }
         if ($type=="not-valid") {
+            $error[] = "Veuillez choisir un type pour la salle";
+        }
+        if ($type=null) {
             $error[] = "Veuillez choisir un type pour la salle";
         }
 
@@ -194,7 +197,7 @@ if (isset($_POST['submit'])) {
                 <label for="capacite" class="form-label">Capacité :</label>
                 <select class="form-select" aria-label="Default select example" name="capacite" required>
                     <option value="not-valid" selected>Choisir une capacité</option>
-                    <option value="5" <?= ($capacite == 5     || ($capacite <=5 && 0<= $capacite ))  ? 'selected' : '' ?> >0 à 5 personnes</option>
+                    <option value="5" <?= ($capacite == 5     || ($capacite <=5 && 0<= $capacite ))  ? 'selected' : '5' ?> >0 à 5 personnes</option>
                     <option value="10" <?= ($capacite == 10   || ($capacite <=10 && 5<= $capacite ))  ? 'selected' : '' ?> >5 à 10 personnes</option>
                     <option value="50" <?= ($capacite == 50   || ($capacite <=50 && 10<= $capacite ))  ? 'selected' : '' ?>>10 à 50 personnes</option>
                     <option value="100" <?= ($capacite == 100 || ($capacite <=100 && 50<= $capacite ))  ? 'selected' : '' ?>>50 à 100 personnes</option>
