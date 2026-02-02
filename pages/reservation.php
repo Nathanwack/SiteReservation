@@ -206,6 +206,7 @@ if (isset($_POST['submit'])) {
            
     </div>
 
+    <a href="planning.php" class="p-5 bg-warning">Voir toutes les reservation</a>
 
 
     <?php
