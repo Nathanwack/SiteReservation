@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 
 <?php if(!$success){ ?>
     <div class="bg-secondary p-5 mb-5 rounded">
-        <p class="fs-5 text-light text-center ">Voici le resultat de votre recherche pour la periode  </br></br>
+        <p class="fs-5 text-light text-center ">Voici le résultat de votre recherche pour la période  </br></br>
             <?= $message ?><br>
             et de'une salle du type  :
             <?= $type_salle ?>
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
         <p class="fs-5 text-light text-center "> <?= $success." </br> pour ".$message;  ?></br>
 
         <a href="reservation.php"class="btn btn-info text-light mx-5 my-5">Faire une autre réservation </a> 
-        <a href="../index.php"class="btn btn-dark text-light">voir le planning des réservations</a> 
+        <a href="../index.php"class="btn btn-dark text-light">Voir le planning des réservations</a> 
 
         <?php }?>
            
